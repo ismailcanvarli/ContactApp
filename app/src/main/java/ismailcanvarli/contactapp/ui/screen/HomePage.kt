@@ -49,7 +49,7 @@ fun Homepage(navController: NavController) {
     val searchQuery = remember { mutableStateOf("") }
     val personList = remember { mutableStateListOf<Person>() }
     val scope = rememberCoroutineScope()
-    val snackBarHostState = remember { SnackbarHostState() }
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(key1 = true) {
         val p1 = Person(1, "Ahmet", "1111")
@@ -115,7 +115,7 @@ fun Homepage(navController: NavController) {
             )
         })
     }, snackbarHost = {
-        SnackbarHost(hostState = snackBarHostState)
+        SnackbarHost(hostState = snackbarHostState)
     }) { paddingValues ->
         LazyColumn(
             modifier = Modifier
@@ -140,12 +140,13 @@ fun Homepage(navController: NavController) {
                             Text(text = person.personPhoneNumber)
                         }
 
+                        // Icona tıklandığında kişi silme işlemi yapılacak
+                        // CoroutineScope kullanılarak SnackbarHostState ile birlikte Snackbar gösterilecek
                         IconButton(onClick = {
                             scope.launch {
-                                val snackBar = snackBarHostState.showSnackbar(
+                                val snackBar = snackbarHostState.showSnackbar(
                                     message = "Delete ${person.personName}?", actionLabel = "YES"
                                 )
-
                                 if (snackBar == SnackbarResult.ActionPerformed) {
                                     delete(person.personId)
                                 }

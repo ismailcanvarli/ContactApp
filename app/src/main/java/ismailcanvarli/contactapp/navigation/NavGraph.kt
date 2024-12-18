@@ -17,6 +17,7 @@ import ismailcanvarli.contactapp.ui.screen.PersonRegisterPage
 @Composable
 fun NavGraph() {
     val navController = rememberNavController()
+    // NavHost içerisinde tanımlanan rotaların belirlenmesi ve yönlendirme işlemlerinin yapılması
     NavHost(navController = navController, startDestination = "homepage") {
         composable("homepage") {
             Homepage(navController = navController)
@@ -24,6 +25,11 @@ fun NavGraph() {
         composable("personRegisterPage") {
             PersonRegisterPage()
         }
+        /*
+        Bu rota, bir person parametresi alıyor ve bu parametre JSON formatında bir Person nesnesi içeriyor.
+         JSON verisi Gson kütüphanesi kullanılarak Person nesnesine dönüştürülüyor
+         ve PersonDetailPage composable fonksiyonuna receivedPerson parametresi olarak aktarılıyor.
+         */
         composable(
             "personDetailPage/{person}",
             arguments = listOf(navArgument("person") { type = NavType.StringType })

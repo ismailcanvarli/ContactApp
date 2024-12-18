@@ -27,11 +27,13 @@ fun PersonDetailPage(receivedPerson: Person) {
     val personName = remember { mutableStateOf("") }
     val personPhoneNumber = remember { mutableStateOf("") }
 
+    // Başlangıçta kişi bilgileri alınıyor
     LaunchedEffect(key1 = true) {
         personName.value = receivedPerson.personName
         personPhoneNumber.value = receivedPerson.personPhoneNumber
     }
 
+    // Kişi bilgileri güncellendiğinde log ekranına yazdırılacak
     fun updatePerson(personId: Int, personName: String, personPhone: String) {
         Log.e("Person Update", "$personId - $personName - $personPhone")
     }

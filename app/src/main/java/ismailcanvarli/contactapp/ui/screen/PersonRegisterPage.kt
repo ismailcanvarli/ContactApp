@@ -25,6 +25,7 @@ fun PersonRegisterPage() {
     val personName = remember { mutableStateOf("") }
     val personPhoneNumber = remember { mutableStateOf("") }
 
+    // Kişi bilgileri kaydedildiğinde log ekranına yazdırılacak
     fun save(personName: String, personPhone: String) {
         Log.e("Person Save", "$personName - $personPhone")
     }
@@ -37,6 +38,7 @@ fun PersonRegisterPage() {
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Kişi adı ve telefon numarası girilecek
             TextField(value = personName.value,
                 onValueChange = { personName.value = it },
                 label = { Text(text = "Person Name") })
@@ -45,6 +47,7 @@ fun PersonRegisterPage() {
                 onValueChange = { personPhoneNumber.value = it },
                 label = { Text(text = "Person Phone") })
 
+            // Butona tıklandığında kişi bilgileri kaydedilecek
             Button(onClick = {
                 save(personName.value, personPhoneNumber.value)
             }) {
