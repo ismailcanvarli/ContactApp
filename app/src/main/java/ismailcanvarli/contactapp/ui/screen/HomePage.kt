@@ -40,11 +40,12 @@ import androidx.navigation.NavController
 import com.google.gson.Gson
 import ismailcanvarli.contactapp.R
 import ismailcanvarli.contactapp.data.entity.Person
+import ismailcanvarli.contactapp.ui.viewmodel.HomePageViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Homepage(navController: NavController) {
+fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel) {
     val isSearching = remember { mutableStateOf(false) }
     val searchQuery = remember { mutableStateOf("") }
     val personList = remember { mutableStateListOf<Person>() }

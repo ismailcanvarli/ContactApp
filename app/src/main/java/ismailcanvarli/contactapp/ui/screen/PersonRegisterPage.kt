@@ -18,10 +18,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import ismailcanvarli.contactapp.ui.viewmodel.PersonRegisterPageViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonRegisterPage() {
+fun PersonRegisterPage(personRegisterPageViewModel: PersonRegisterPageViewModel) {
     val personName = remember { mutableStateOf("") }
     val personPhoneNumber = remember { mutableStateOf("") }
 
