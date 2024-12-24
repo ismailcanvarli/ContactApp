@@ -2,7 +2,6 @@
 
 package ismailcanvarli.contactapp.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -39,7 +38,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.gson.Gson
 import ismailcanvarli.contactapp.R
-import ismailcanvarli.contactapp.data.entity.Person
 import ismailcanvarli.contactapp.ui.viewmodel.HomePageViewModel
 import kotlinx.coroutines.launch
 
@@ -48,25 +46,15 @@ import kotlinx.coroutines.launch
 fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel) {
     val isSearching = remember { mutableStateOf(false) }
     val searchQuery = remember { mutableStateOf("") }
-    val personList = remember { mutableStateListOf<Person>() }
+    // Person listesini almak için observeAsState fonksiyonu kullanılır.
+    // observeAsState fonksiyonu LiveData'dan State'e dönüşüm yapar.
+    val personList = homePageViewModel.personList.observeAsState(listOf())
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
 
+    // Ekran açıldığında kişileri yüklemek için kullanılır.
     LaunchedEffect(key1 = true) {
-        val p1 = Person(1, "Ahmet", "1111")
-        val p2 = Person(2, "Zeynep", "2222")
-        val p3 = Person(3, "Beyza", "3333")
-        personList.add(p1)
-        personList.add(p2)
-        personList.add(p3)
-    }
-
-    fun search(query: String) {
-        Log.e("Person Search", query)
-    }
-
-    fun delete(personId: Int) {
-        Log.e("Person Delete", personId.toString())
+        homePageViewModel.uploadPerson()
     }
 
     Scaffold(topBar = {
@@ -74,7 +62,7 @@ fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel)
             if (isSearching.value) {
                 TextField(value = searchQuery.value, onValueChange = {
                     searchQuery.value = it
-                    search(it)
+                    homePageViewModel.searchPerson(it)
                 }, label = { Text(text = "Search") }, colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
                     unfocusedContainerColor = Color.Transparent,
@@ -123,8 +111,8 @@ fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel)
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            items(count = personList.count(), itemContent = {
-                val person = personList[it]
+            items(count = personList.value.count(), itemContent = {
+                val person = personList.value[it]
                 Card(modifier = Modifier.padding(all = 5.dp)) {
                     Row(
                         modifier = Modifier
@@ -149,7 +137,7 @@ fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel)
                                     message = "Delete ${person.personName}?", actionLabel = "YES"
                                 )
                                 if (snackBar == SnackbarResult.ActionPerformed) {
-                                    delete(person.personId)
+                                    homePageViewModel.delete(person.personId)
                                 }
                             }
                         }) {
@@ -158,10 +146,10 @@ fun Homepage(navController: NavController, homePageViewModel: HomePageViewModel)
                                 contentDescription = "",
                                 tint = Color.Gray
                             )
-                        }
-                    }
-                }
-            })
-        }
-    }
-}
+                        } // IconButton
+                    } // Row
+                } // Card
+            }) // items
+        } // LazyColumn
+    } // Scaffold
+} // @Composable fun Homepage

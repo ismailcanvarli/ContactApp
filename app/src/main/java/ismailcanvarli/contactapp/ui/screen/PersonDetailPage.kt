@@ -2,7 +2,6 @@
 
 package ismailcanvarli.contactapp.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,11 +33,6 @@ fun PersonDetailPage(receivedPerson: Person, personDetailViewModel: PersonDetail
         personPhoneNumber.value = receivedPerson.personPhoneNumber
     }
 
-    // Kişi bilgileri güncellendiğinde log ekranına yazdırılacak
-    fun updatePerson(personId: Int, personName: String, personPhone: String) {
-        Log.e("Person Update", "$personId - $personName - $personPhone")
-    }
-
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Person Detail") }) }) { paddingValues ->
         Column(
             modifier = Modifier
@@ -54,7 +48,11 @@ fun PersonDetailPage(receivedPerson: Person, personDetailViewModel: PersonDetail
                 onValueChange = { personPhoneNumber.value = it },
                 label = { Text(text = "Person Phone") })
             Button(onClick = {
-                updatePerson(receivedPerson.personId, personName.value, personPhoneNumber.value)
+                personDetailViewModel.updatePerson(
+                    receivedPerson.personId,
+                    personName.value,
+                    personPhoneNumber.value
+                )
             }) {
                 Text(text = "UPDATE")
             }

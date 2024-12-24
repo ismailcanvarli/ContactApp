@@ -2,7 +2,6 @@
 
 package ismailcanvarli.contactapp.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,11 +25,6 @@ fun PersonRegisterPage(personRegisterPageViewModel: PersonRegisterPageViewModel)
     val personName = remember { mutableStateOf("") }
     val personPhoneNumber = remember { mutableStateOf("") }
 
-    // Kişi bilgileri kaydedildiğinde log ekranına yazdırılacak
-    fun save(personName: String, personPhone: String) {
-        Log.e("Person Save", "$personName - $personPhone")
-    }
-
     Scaffold(topBar = { TopAppBar(title = { Text(text = "Person Register") }) }) { paddingValues ->
         Column(
             modifier = Modifier
@@ -50,7 +44,7 @@ fun PersonRegisterPage(personRegisterPageViewModel: PersonRegisterPageViewModel)
 
             // Butona tıklandığında kişi bilgileri kaydedilecek
             Button(onClick = {
-                save(personName.value, personPhoneNumber.value)
+                personRegisterPageViewModel.save(personName.value, personPhoneNumber.value)
             }) {
                 Text(text = "SAVE")
             }
