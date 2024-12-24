@@ -5,9 +5,7 @@ package ismailcanvarli.contactapp.data.repo
 import ismailcanvarli.contactapp.data.datasource.PersonDataSource
 import ismailcanvarli.contactapp.data.entity.Person
 
-class PersonRepository {
-    var personDataSource = PersonDataSource()
-
+class PersonRepository(var personDataSource: PersonDataSource) {
     suspend fun uploadPerson(): List<Person> = personDataSource.uploadPerson()
 
     suspend fun save(personName: String, personPhone: String) =

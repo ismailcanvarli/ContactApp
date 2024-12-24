@@ -4,12 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import ismailcanvarli.contactapp.navigation.NavGraph
 import ismailcanvarli.contactapp.ui.theme.ContactAppTheme
 import ismailcanvarli.contactapp.ui.viewmodel.HomePageViewModel
 import ismailcanvarli.contactapp.ui.viewmodel.PersonDetailViewModel
 import ismailcanvarli.contactapp.ui.viewmodel.PersonRegisterPageViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     val homePageViewModel: HomePageViewModel by viewModels()
     val personDetailViewModel: PersonDetailViewModel by viewModels()

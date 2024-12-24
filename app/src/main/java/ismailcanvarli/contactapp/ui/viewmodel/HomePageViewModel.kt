@@ -4,15 +4,16 @@ package ismailcanvarli.contactapp.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import ismailcanvarli.contactapp.data.entity.Person
 import ismailcanvarli.contactapp.data.repo.PersonRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HomePageViewModel : ViewModel() {
-    var personRepository = PersonRepository()
-
+@HiltViewModel
+class HomePageViewModel @Inject constructor(var personRepository: PersonRepository) : ViewModel() {
     // Arayüze veri göndermek için kullanılır.
     var personList = MutableLiveData<List<Person>>()
 
