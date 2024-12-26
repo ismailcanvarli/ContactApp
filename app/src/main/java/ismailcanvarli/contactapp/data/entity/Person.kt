@@ -1,5 +1,9 @@
 package ismailcanvarli.contactapp.data.entity
 
+import com.google.gson.annotations.SerializedName
+
 data class Person(
-    var personId: Int, var personName: String, var personPhoneNumber: String
+    @SerializedName("kisi_id") var personId: Int,
+    @SerializedName("kisi_ad") var personName: String,
+    @SerializedName("kisi_tel") var personPhoneNumber: String
 )
