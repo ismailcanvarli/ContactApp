@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import ismailcanvarli.contactapp.data.datasource.PersonDataSource
 import ismailcanvarli.contactapp.data.repo.PersonRepository
+import ismailcanvarli.contactapp.retrofit.ApiUtils
+import ismailcanvarli.contactapp.retrofit.PersonDao
 import javax.inject.Singleton
 
 @Module
@@ -21,7 +23,13 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun providePersonDataSource(): PersonDataSource {
-        return PersonDataSource()
+    fun providePersonDataSource(personDao: PersonDao): PersonDataSource {
+        return PersonDataSource(personDao)
+    }
+
+    @Provides
+    @Singleton
+    fun providePersonDao(): PersonDao {
+        return ApiUtils.getPersonDao()
     }
 }
