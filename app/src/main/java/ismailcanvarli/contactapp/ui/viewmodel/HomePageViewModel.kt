@@ -37,7 +37,11 @@ class HomePageViewModel @Inject constructor(var personRepository: PersonReposito
 
     fun searchPerson(searchWord: String) {
         CoroutineScope(Dispatchers.Main).launch {
-            personList.value = personRepository.searchPerson(searchWord)
+            try {
+                personList.value = personRepository.searchPerson(searchWord)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 }
